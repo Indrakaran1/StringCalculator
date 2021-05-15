@@ -50,4 +50,9 @@ class CalculatorTest {
 			assertEquals(e.getMessage(), "negatives not allowed -1,-3");
 		}
 	}
+	
+	@Test
+	void numberGreaterThanThousandTest() {
+		assertEquals(2, Calculator.add("2,1001"));
+	}
 }

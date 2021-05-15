@@ -30,4 +30,9 @@ class CalculatorTest {
 	void newLineTest() {
 		assertEquals(6, Calculator.add("1\n2,3"));
 	}
+	
+	@Test
+	void customDelimiterTest() {
+		assertEquals(3, Calculator.add("//;\n1;2"));
+	}
 }

@@ -1,12 +1,23 @@
 package com.project.calculator;
 
 public class Calculator {
+	private final static String customDelimiterRegex = "//(.*)\n(.*)";
+	private final static String newLine = "\n";
+	private final static String defaultDelimiter = ",";
+	
 	public static int add(String input) {
 		if (input.isBlank())
 			return 0;
 		else if (input.length() == 1)
 			return Integer.parseInt(input);
-		String[] numberSeperated = input.split(",|\n");
+		
+		String delimiter = defaultDelimiter;
+		if (input.matches(customDelimiterRegex)) {
+			delimiter = Character.toString(input.charAt(2));
+			input = input.substring(4);
+		}
+		String[] numberSeperated = input.split(delimiter + "|" + newLine);
+		
 		int result = getSum(numberSeperated);
 		return result;
 	}

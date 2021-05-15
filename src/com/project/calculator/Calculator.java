@@ -1,21 +1,25 @@
 package com.project.calculator;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.regex.Pattern;
+import java.util.regex.Matcher;
+
 public class Calculator {
 	private final static String customDelimiterRegex = "//(.*)\n(.*)";
 	private final static String newLine = "\n";
 	private final static String defaultDelimiter = ",";
-	
+
 	public static int add(String input) {
 		if (input.isBlank())
 			return 0;
 		else if (input.length() == 1)
 			return Integer.parseInt(input);
-		
-		String delimiter = defaultDelimiter;
-		if (input.matches(customDelimiterRegex)) {
-			delimiter = Character.toString(input.charAt(2));
-			input = input.substring(4);
-		}
+
+		List<String> data = getDelimiter(input);
+		String delimiter = data.get(0);
+		input = data.get(1);
+
 		String[] numberSeperated = input.split(delimiter + "|" + newLine);
 		checkForNegativeNumbers(numberSeperated);
 		int result = getSum(numberSeperated);
@@ -31,7 +35,28 @@ public class Calculator {
 		}
 		return result;
 	}
-	
+
+	public static List<String> getDelimiter(String input) {
+		List<String> data = new ArrayList();
+		String delimiter = defaultDelimiter;
+
+		if (input.matches(customDelimiterRegex)) {
+
+			String allDelimitersString = null;
+			Pattern pattern = Pattern.compile(customDelimiterRegex);
+			Matcher matcher = pattern.matcher(input);
+			while (matcher.find()) {
+				allDelimitersString = matcher.group(1);
+				input = matcher.group(2);
+			}
+			delimiter += "|" + allDelimitersString.replace("[", "").replace("]", "");
+
+		}
+		data.add(delimiter);
+		data.add(input);
+		return data;
+	}
+
 	public static void checkForNegativeNumbers(String[] numbers) {
 		String negativeNumbers = "";
 		for (String number : numbers) {

@@ -49,7 +49,10 @@ public class Calculator {
 				allDelimitersString = matcher.group(1);
 				input = matcher.group(2);
 			}
-			delimiter += "|" + allDelimitersString.replace("[", "").replace("]", "");
+			String[] allDelimiters = allDelimitersString.split("]");
+			for (String customDelimiter : allDelimiters) {
+				delimiter += "|" + customDelimiter.replace("[", "");
+			}
 
 		}
 		data.add(delimiter);

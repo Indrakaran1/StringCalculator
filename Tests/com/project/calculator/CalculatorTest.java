@@ -25,4 +25,9 @@ class CalculatorTest {
 	void threeValueTest() {
 		assertEquals(6, Calculator.add("1,2,3"));
 	}
+	
+	@Test
+	void newLineTest() {
+		assertEquals(6, Calculator.add("1\n2,3"));
+	}
 }

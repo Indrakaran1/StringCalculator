@@ -35,4 +35,19 @@ class CalculatorTest {
 	void customDelimiterTest() {
 		assertEquals(3, Calculator.add("//;\n1;2"));
 	}
+	
+	@Test
+	void negativeNumberTest() {
+		try {
+			Calculator.add("5,-4");
+		} catch (IllegalArgumentException e) {
+			assertEquals(e.getMessage(), "negatives not allowed -4");
+		}
+		
+		try {
+			Calculator.add("-1,2,-3");
+		} catch (IllegalArgumentException e) {
+			assertEquals(e.getMessage(), "negatives not allowed -1,-3");
+		}
+	}
 }

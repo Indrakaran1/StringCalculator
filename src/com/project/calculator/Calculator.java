@@ -17,7 +17,7 @@ public class Calculator {
 			input = input.substring(4);
 		}
 		String[] numberSeperated = input.split(delimiter + "|" + newLine);
-		
+		checkForNegativeNumbers(numberSeperated);
 		int result = getSum(numberSeperated);
 		return result;
 	}
@@ -27,5 +27,19 @@ public class Calculator {
 		for (String number : numbers)
 			result += Integer.parseInt(number);
 		return result;
+	}
+	
+	public static void checkForNegativeNumbers(String[] numbers) {
+		String negativeNumbers = "";
+		for (String number : numbers) {
+			if ((int) Integer.parseInt(number) < 0) {
+				if (negativeNumbers.isBlank())
+					negativeNumbers += number;
+				else
+					negativeNumbers += defaultDelimiter + number;
+			}
+		}
+		if (!negativeNumbers.isBlank())
+			throw new IllegalArgumentException("negatives not allowed " + negativeNumbers);
 	}
 }
